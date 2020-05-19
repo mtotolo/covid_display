@@ -4,9 +4,7 @@ import geopandas as gpd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
 import plotly.express as px
-import json
 
 ###########################
 # Model / Data manipulation
@@ -93,8 +91,11 @@ app.layout = html.Div([
         dcc.Graph(
             id='main',
             figure=fig
-        )
-    ], style={'width': '100%', 'display': 'inline-block', 'padding': '0'}),
+        ),
+        dcc.Graph(
+            id='time-series',
+            figure=create_time_series(df_melt.query("Country == 'Italy' and kind == 'deaths'"), "Italy")),
+    ], style={'width': '80%', 'display': 'inline-block', 'padding': '0'}),
  #   html.Div([
  #       dcc.Textarea(
  #           placeholder='Enter a value...',
@@ -103,11 +104,7 @@ app.layout = html.Div([
  #           style={'width': '100%'}
  #       )
  #   ]),
-    html.Div([
-        dcc.Graph(
-            id='time-series',
-            figure=create_time_series(df_melt.query("Country == 'Italy' and kind == 'deaths'"), "Italy")),
-    ], style={'display': 'inline-block', 'width': '80%', 'padding': '0'})
+
 ])
 
 
